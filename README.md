@@ -1,8 +1,8 @@
 # Real-Time Data Pipeline with Kafka on AWS
 
-![real-time-data-pipeline-with-kafka-on-aws](./images/real-time-data-pipeline-with-kafka-on-aws.png)
-
 This demonstrates how to build a scalable real-time data pipeline using Apache Kafka and AWS services. The architecture integrates Kafka for real-time data ingestion with AWS S3, Glue, and Athena to enable efficient data storage, cataloging, and querying. The pipeline handles real-time data from CSV files, simulates streaming with Python, and processes the data seamlessly in the cloud.
+
+![real-time-data-pipeline-with-kafka-on-aws](./images/real-time-data-pipeline-with-kafka-on-aws.png)
 
 #### **Key Components:**
 
