@@ -1,0 +1,59 @@
+Amazon Linux CLI VS Code:
+
+-- Open bash terminal and Run below commands after connecting to EC2 instance
+
+sudo yum update
+sudo yum install java
+java -version
+
+-- Get URL from Webpage: https://kafka.apache.org/downloads
+
+wget <file_url>
+ls
+tar -xzf <zip_file_name>
+ls
+sudo mv <file_name> /usr/local/kafka
+
+#Zookeeper
+
+cd /usr/local/kafka/
+sudo nano config/server.properties
+
+-- Scroll Down and Uncomment advertised.listeners=PLAINTEXT://your-host
+-- Modify it to advertised.listeners=PLAINTEXT://<your_ec2_instance_public_IP>:9092
+-- CTRL-S to Save and Then CTRL-X to exit file
+
+bin/zookeeper-server-start.sh config/zookeeper.properties
+
+-- Zookeeper starts running
+
+-- Open another bash terminal and Run below commands after connecting to EC2 instance
+#Kafka
+
+export KAFKA_HEAP_OPTS="-Xmx256M -Xms128M"
+cd /usr/local/kafka/
+bin/kafka-server-start.sh config/server.properties
+
+-------------------------------------------------------------------------
+-- Skip this! It is to check port and kill the process properly.
+-- Open new bash and Run below commands after connecting to EC2 instance
+
+ps aux | grep zookeeper
+kill <port number>
+ps aux | grep kafka
+##Example:
+-- kill 27851
+-------------------------------------------------------------------------
+
+-- Open another bash terminal and Run below commands after connecting to EC2 instance
+#Producer
+
+cd /usr/local/kafka/
+bin/kafka-topics.sh --create --topic <topic_name> --bootstrap-server <your_ec2_instance_public_IP>:9092 --replication-factor 1 --partitions 1
+bin/kafka-console-producer.sh --topic <topic_name> --bootstrap-server <your_ec2_instance_public_IP>:9092
+
+-- Open another bash terminal and Run below commands after connecting to EC2 instance
+#Consumer
+
+cd /usr/local/kafka/
+bin/kafka-console-consumer.sh --topic <topic_name> --bootstrap-server <your_ec2_instance_public_IP>:9092
